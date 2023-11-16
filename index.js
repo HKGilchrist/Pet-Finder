@@ -21,7 +21,7 @@ app.get("/api", (req, res) => {
 // get all pets from the database
 app.get("/api/v1/pets", (req, res) => {
   // send the pets array as a response
-  res.json(pets);
+  res.send(pets);
 });
 
 // get pet by owner with query string - ? owner = ___ (localhost:1337/dogs?key = value)
@@ -39,6 +39,12 @@ app.get("/api/v1/pets/owner", (req, res) => {
   } else {
     res.status(404).json({ message: "Pet not found" });
   }
+
+  // OR - Use .filter:
+  //   const {owner} = req.query
+  //   const pet = pets.filter(pet => pet.owner.toLowerCase() === owner.toLowerCase())
+  //   res.send(pet)
+  // .toLowerCase is to avoid a 404 error with different capitalizaitons.
 });
 
 // get pet by name
